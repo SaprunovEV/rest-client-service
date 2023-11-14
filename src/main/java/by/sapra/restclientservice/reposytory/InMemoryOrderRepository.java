@@ -76,12 +76,20 @@ public class InMemoryOrderRepository implements OrderRepository {
 
     @Override
     public void deleteById(Long id) {
+        Order currentOrder = orders.get(id);
+
+        if (currentOrder == null) {
+            throw new EntityNotFoundException(MessageFormat.format("Клиента с id {0} не найдено", id));
+        }
+
+        currentOrder.getClient().removeOrder(currentOrder.getId());
+
         orders.remove(id);
     }
 
     @Override
     public void deleteByIdIn(List<Long> ids) {
-        ids.forEach(orders::remove);
+        ids.forEach(this::deleteById);
     }
 
     @Autowired
