@@ -1,4 +1,4 @@
-package by.sapra.restclientservice.web.v1;
+package by.sapra.restclientservice.web.controller.v1;
 
 import by.sapra.restclientservice.mapper.v1.OrderMapper;
 import by.sapra.restclientservice.service.OrderService;
