@@ -1,8 +1,10 @@
-package by.sapra.restclientservice.reposytory;
+package by.sapra.restclientservice.reposytory.impl;
 
 import by.sapra.restclientservice.exception.EntityNotFoundException;
 import by.sapra.restclientservice.model.Client;
 import by.sapra.restclientservice.model.Order;
+import by.sapra.restclientservice.reposytory.ClientRepository;
+import by.sapra.restclientservice.reposytory.OrderRepository;
 import by.sapra.restclientservice.utils.BeenUtils;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

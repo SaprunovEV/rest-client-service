@@ -1,11 +1,18 @@
 package by.sapra.restclientservice.web.controller.v1;
 
-import by.sapra.restclientservice.exception.EntityNotFoundException;
 import by.sapra.restclientservice.mapper.v1.ClientMapper;
 import by.sapra.restclientservice.service.ClintService;
 import by.sapra.restclientservice.web.model.ClientListResponse;
 import by.sapra.restclientservice.web.model.ClintResponse;
+import by.sapra.restclientservice.web.model.ErrorResponse;
 import by.sapra.restclientservice.web.model.UpsertClientRequest;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,10 +24,20 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 @RestController
 @RequestMapping("/api/v1/client")
 @RequiredArgsConstructor
+@Tag(name = "Client V1", description = "Client API version V1")
 public class ClientController {
     private final ClintService clintService;
     private final ClientMapper clientMapper;
 
+    @Operation(
+            summary = "Get all client.",
+            description = "Get all client. Return list of id, name and orders.",
+            tags = {"client"}
+    )
+    @ApiResponse(
+            responseCode = "200",
+            content = @Content(schema = @Schema(implementation = ClientListResponse.class))
+    )
     @GetMapping()
     public ResponseEntity<ClientListResponse> findAll() {
         return ResponseEntity.ok().body(
@@ -28,6 +45,25 @@ public class ClientController {
         );
     }
 
+    @Operation(
+            summary = "Get client by ID.",
+            description = "Get client by ID. Return id, name and orders.",
+            tags = {"client", "id"}
+    )
+    @ApiResponses({
+                    @ApiResponse(
+                            responseCode = "200",
+                            content = {
+                                    @Content(schema = @Schema(implementation = ClintResponse.class), mediaType = "application/json")
+                            }
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            content = {
+                                    @Content(schema = @Schema(implementation = ErrorResponse.class), mediaType = "application/json")
+                            }
+                    )
+    })
     @GetMapping("/{id}")
     public ResponseEntity<ClintResponse> findBiId(@PathVariable("id") Long clientId) {
         return ResponseEntity.ok(
@@ -35,6 +71,32 @@ public class ClientController {
         );
     }
 
+    @Operation(
+            summary = "Update client by ID",
+            description = "Update client by ID. Return id, name and orders.",
+            tags = {"client", "id"}
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    content = {
+                            @Content(schema = @Schema(implementation = ClintResponse.class), mediaType = "application/json")
+                    }
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    content = {
+                            @Content(schema = @Schema(implementation = ErrorResponse.class), mediaType = "application/json")
+                    }
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Not correct client request",
+                    content = {
+                            @Content(schema = @Schema(implementation = ErrorResponse.class), mediaType = "application/json")
+                    }
+            )
+    })
     @PutMapping("/{id}")
     public ResponseEntity<ClintResponse> updateClient(
             @PathVariable("id") Long clientId,
@@ -46,6 +108,26 @@ public class ClientController {
         );
     }
 
+    @Operation(
+            summary = "Save new client",
+            description = "Save new client. Return id, name and orders.",
+            tags = {"client"}
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "201",
+                    content = {
+                            @Content(schema = @Schema(implementation = ClintResponse.class), mediaType = "application/json")
+                    }
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Not correct client request",
+                    content = {
+                            @Content(schema = @Schema(implementation = ErrorResponse.class), mediaType = "application/json")
+                    }
+            )
+    })
     @PostMapping
     public ResponseEntity<ClintResponse> create(@RequestBody @Valid UpsertClientRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(
@@ -53,6 +135,24 @@ public class ClientController {
         );
     }
 
+    @Operation(
+            summary = "Delete client by ID",
+            description = "Delete client by Id. Return no content",
+            tags = {"client", "id"}
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "204",
+                    content = @Content(schema = @Schema(implementation = Void.class))
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    content = @Content(schema = @Schema(
+                            implementation = ErrorResponse.class),
+                            mediaType = "application/json"
+                    )
+            )
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteClient(@PathVariable("id") Long clientId) {
         clintService.deleteById(clientId);

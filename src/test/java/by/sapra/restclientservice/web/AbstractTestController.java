@@ -7,12 +7,14 @@ import by.sapra.restclientservice.web.model.OrderResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.ArrayList;
 
+@ActiveProfiles("test")
 public abstract class AbstractTestController {
     @Autowired
     protected MockMvc mockMvc;

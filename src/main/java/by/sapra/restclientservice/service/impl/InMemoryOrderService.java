@@ -50,17 +50,4 @@ public class InMemoryOrderService implements OrderService {
     public void deleteByIdIn(List<Long> ids) {
         repository.deleteByIdIn(ids);
     }
-
-    private void checkForUpdate(Long id) {
-        Order currentOrder = findById(id);
-        Instant now = Instant.now();
-
-        Duration duration = Duration.between(currentOrder.getCreateAt(), now);
-
-        if (duration.getSeconds() > 5L) {
-            throw new UpdateStateException(
-                    MessageFormat.format("Заказ с ID {0} невозможно обновить! Прошло более 5 секунд", id)
-            );
-        }
-    }
 }
