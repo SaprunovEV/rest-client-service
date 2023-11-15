@@ -6,7 +6,6 @@ import by.sapra.restclientservice.model.Order;
 import by.sapra.restclientservice.reposytory.ClientRepository;
 import by.sapra.restclientservice.reposytory.OrderRepository;
 import by.sapra.restclientservice.utils.BeenUtils;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,12 +19,11 @@ import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
 @RequiredArgsConstructor
-@NoArgsConstructor
 public class InMemoryClientRepository implements ClientRepository {
     private OrderRepository orderRepository;
 
-    private Map<Long, Client> clients = new ConcurrentHashMap<>();
-    private AtomicLong nextId = new AtomicLong(1);
+    private final Map<Long, Client> clients = new ConcurrentHashMap<>();
+    private final AtomicLong nextId = new AtomicLong(1);
 
     @Override
     public List<Client> findAll() {
