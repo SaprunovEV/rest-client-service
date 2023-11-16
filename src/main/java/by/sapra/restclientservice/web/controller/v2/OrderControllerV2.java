@@ -2,10 +2,7 @@ package by.sapra.restclientservice.web.controller.v2;
 
 import by.sapra.restclientservice.mapper.v2.OrderMapperV2;
 import by.sapra.restclientservice.service.OrderService;
-import by.sapra.restclientservice.web.model.ErrorResponse;
-import by.sapra.restclientservice.web.model.OrderListResponse;
-import by.sapra.restclientservice.web.model.OrderResponse;
-import by.sapra.restclientservice.web.model.UpsertOrderRequest;
+import by.sapra.restclientservice.web.model.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -66,6 +63,31 @@ public class OrderControllerV2 {
     public ResponseEntity<OrderResponse> findById(@PathVariable("id") Long orderId) {
         return ResponseEntity.ok(
                 mapper.orderToResponse(databaseOrderService.findById(orderId))
+        );
+    }
+    @Operation(
+            summary = "Get order by filter of parameters.",
+            description = "Get order by filter. Return list of id, product and cost.",
+            tags = {"order", "filter"}
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    content = {
+                            @Content(schema = @Schema(implementation = OrderListResponse.class), mediaType = "application/json")
+                    }
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    content = {
+                            @Content(schema = @Schema(implementation = ErrorResponse.class), mediaType = "application/json")
+                    }
+            )
+    })
+    @GetMapping("/filter")
+    public ResponseEntity<OrderListResponse> filterBy(@Valid OrderFilter filter) {
+        return ResponseEntity.ok(
+                mapper.orderListToOrderListResponse(databaseOrderService.filterBy(filter))
         );
     }
 

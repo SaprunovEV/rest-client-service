@@ -4,8 +4,11 @@ import by.sapra.restclientservice.exception.EntityNotFoundException;
 import by.sapra.restclientservice.model.Client;
 import by.sapra.restclientservice.model.Order;
 import by.sapra.restclientservice.reposytory.DatabaseOrderRepository;
+import by.sapra.restclientservice.reposytory.OrderSpecification;
 import by.sapra.restclientservice.utils.BeenUtils;
+import by.sapra.restclientservice.web.model.OrderFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
@@ -21,6 +24,13 @@ public class DatabaseOrderService implements OrderService {
     @Override
     public List<Order> findAll() {
         return repository.findAll();
+    }
+
+    @Override
+    public List<Order> filterBy(OrderFilter filter) {
+        return repository.findAll(OrderSpecification.withFilter(filter),
+            PageRequest.of(filter.getPageNumber(), filter.getPageSize())
+        ).getContent();
     }
 
     @Override

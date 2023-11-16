@@ -1,16 +1,15 @@
 package by.sapra.restclientservice.service.impl;
 
 import by.sapra.restclientservice.exception.EntityNotFoundException;
-import by.sapra.restclientservice.exception.UpdateStateException;
 import by.sapra.restclientservice.model.Order;
 import by.sapra.restclientservice.reposytory.OrderRepository;
 import by.sapra.restclientservice.service.OrderService;
+import by.sapra.restclientservice.web.model.OrderFilter;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
-import java.time.Duration;
-import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -21,6 +20,11 @@ public class InMemoryOrderService implements OrderService {
     @Override
     public List<Order> findAll() {
         return repository.findAll();
+    }
+
+    @Override
+    public List<Order> filterBy(OrderFilter filter) {
+        throw new NotImplementedException();
     }
 
     @Override

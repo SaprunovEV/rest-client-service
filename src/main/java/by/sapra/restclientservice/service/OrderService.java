@@ -2,6 +2,7 @@ package by.sapra.restclientservice.service;
 
 import by.sapra.restclientservice.exception.UpdateStateException;
 import by.sapra.restclientservice.model.Order;
+import by.sapra.restclientservice.web.model.OrderFilter;
 
 import java.text.MessageFormat;
 import java.time.Duration;
@@ -10,6 +11,7 @@ import java.util.List;
 
 public interface OrderService {
     List<Order> findAll();
+    List<Order> filterBy(OrderFilter filter);
 
     Order findById(Long id);
 
