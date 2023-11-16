@@ -8,7 +8,6 @@ import by.sapra.restclientservice.web.model.ErrorResponse;
 import by.sapra.restclientservice.web.model.UpsertClientRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -26,7 +25,7 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 @RequiredArgsConstructor
 @Tag(name = "Client V1", description = "Client API version V1")
 public class ClientController {
-    private final ClintService clintService;
+    private final ClintService inMemoryClintService;
     private final ClientMapper clientMapper;
 
     @Operation(
@@ -41,7 +40,7 @@ public class ClientController {
     @GetMapping()
     public ResponseEntity<ClientListResponse> findAll() {
         return ResponseEntity.ok().body(
-                clientMapper.clientListToClientListResponse(clintService.findAll())
+                clientMapper.clientListToClientListResponse(inMemoryClintService.findAll())
         );
     }
 
@@ -67,7 +66,7 @@ public class ClientController {
     @GetMapping("/{id}")
     public ResponseEntity<ClintResponse> findBiId(@PathVariable("id") Long clientId) {
         return ResponseEntity.ok(
-                clientMapper.clientToResponse(clintService.findById(clientId))
+                clientMapper.clientToResponse(inMemoryClintService.findById(clientId))
         );
     }
 
@@ -103,7 +102,7 @@ public class ClientController {
             @RequestBody @Valid UpsertClientRequest request) {
         return ResponseEntity.ok(
                 clientMapper.clientToResponse(
-                        clintService.update(clientMapper.requestToClient(clientId, request))
+                        inMemoryClintService.update(clientMapper.requestToClient(clientId, request))
                 )
         );
     }
@@ -131,7 +130,7 @@ public class ClientController {
     @PostMapping
     public ResponseEntity<ClintResponse> create(@RequestBody @Valid UpsertClientRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(
-                clientMapper.clientToResponse(clintService.save(clientMapper.requestToClient(request)))
+                clientMapper.clientToResponse(inMemoryClintService.save(clientMapper.requestToClient(request)))
         );
     }
 
@@ -155,7 +154,7 @@ public class ClientController {
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteClient(@PathVariable("id") Long clientId) {
-        clintService.deleteById(clientId);
+        inMemoryClintService.deleteById(clientId);
         return ResponseEntity.status(NO_CONTENT).build();
     }
 }

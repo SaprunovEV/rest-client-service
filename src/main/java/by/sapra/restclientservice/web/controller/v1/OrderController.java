@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @Tag(name = "Order V1", description = "Order API version V1")
 public class OrderController {
-    private final OrderService service;
+    private final OrderService inMemoryOrderService;
     private final OrderMapper mapper;
 
     @Operation(
@@ -35,7 +35,7 @@ public class OrderController {
     @GetMapping
     public ResponseEntity<OrderListResponse> findAll() {
         return ResponseEntity.ok(
-                mapper.orderListToOrderListResponse(service.findAll())
+                mapper.orderListToOrderListResponse(inMemoryOrderService.findAll())
         );
     }
 
@@ -61,7 +61,7 @@ public class OrderController {
     @GetMapping("/{id}")
     public ResponseEntity<OrderResponse> findById(@PathVariable("id") Long orderId) {
         return ResponseEntity.ok(
-                mapper.orderToResponse(service.findById(orderId))
+                mapper.orderToResponse(inMemoryOrderService.findById(orderId))
         );
     }
 
@@ -88,7 +88,7 @@ public class OrderController {
     @PostMapping
     public ResponseEntity<OrderResponse> create(@RequestBody @Valid UpsertOrderRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(
-                mapper.orderToResponse(service.save(mapper.requestToOrder(request)))
+                mapper.orderToResponse(inMemoryOrderService.save(mapper.requestToOrder(request)))
         );
     }
 
@@ -121,7 +121,7 @@ public class OrderController {
     @PutMapping("/{id}")
     public ResponseEntity<OrderResponse> update(@PathVariable("id") Long orderId, @RequestBody UpsertOrderRequest request) {
         return ResponseEntity.ok(
-                mapper.orderToResponse(service.update(mapper.requestToOrder(orderId, request)))
+                mapper.orderToResponse(inMemoryOrderService.update(mapper.requestToOrder(orderId, request)))
         );
     }
 
@@ -145,7 +145,7 @@ public class OrderController {
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
-        service.deleteById(id);
+        inMemoryOrderService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

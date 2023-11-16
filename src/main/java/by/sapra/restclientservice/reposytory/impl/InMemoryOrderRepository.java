@@ -8,7 +8,7 @@ import by.sapra.restclientservice.reposytory.OrderRepository;
 import by.sapra.restclientservice.utils.BeenUtils;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import java.text.MessageFormat;
 import java.time.Instant;
@@ -18,10 +18,10 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
-@Repository
+@Component
 @NoArgsConstructor
 public class InMemoryOrderRepository implements OrderRepository {
-    private ClientRepository clientRepository;
+    private ClientRepository inMemoryClientRepository;
 
     private final Map<Long, Order> orders = new ConcurrentHashMap<>();
     private final AtomicLong currentId = new AtomicLong(1);
@@ -41,7 +41,7 @@ public class InMemoryOrderRepository implements OrderRepository {
         Long orderId = currentId.incrementAndGet();
         Long clientId = order.getClient().getId();
 
-        Client client = clientRepository.findById(clientId).orElseThrow(() -> new EntityNotFoundException(MessageFormat.format("Клиент с ID {0} не найден", clientId)));
+        Client client = inMemoryClientRepository.findById(clientId).orElseThrow(() -> new EntityNotFoundException(MessageFormat.format("Клиент с ID {0} не найден", clientId)));
 
         order.setId(orderId);
         Instant now = Instant.now();
@@ -52,7 +52,7 @@ public class InMemoryOrderRepository implements OrderRepository {
         orders.put(orderId, order);
 
         client.addOrder(order);
-        clientRepository.update(client);
+        inMemoryClientRepository.update(client);
 
         return order;
     }
@@ -95,7 +95,7 @@ public class InMemoryOrderRepository implements OrderRepository {
     }
 
     @Autowired
-    public void setClientRepository(ClientRepository clientRepository) {
-        this.clientRepository = clientRepository;
+    public void setInMemoryClientRepository(ClientRepository inMemoryClientRepository) {
+        this.inMemoryClientRepository = inMemoryClientRepository;
     }
 }

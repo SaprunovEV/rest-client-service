@@ -8,7 +8,7 @@ import by.sapra.restclientservice.reposytory.OrderRepository;
 import by.sapra.restclientservice.utils.BeenUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import java.text.MessageFormat;
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
-@Repository
+@Component
 @RequiredArgsConstructor
 public class InMemoryClientRepository implements ClientRepository {
     private OrderRepository orderRepository;
