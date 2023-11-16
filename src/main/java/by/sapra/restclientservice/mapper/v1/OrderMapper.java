@@ -13,14 +13,14 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class OrderMapper {
-    private final ClintService clintService;
+    private final ClintService inMemoryClintService;
 
     public Order requestToOrder(UpsertOrderRequest request) {
         Order order = new Order();
 
         order.setCost(request.getCost());
         order.setProduct(request.getProduct());
-        order.setClient(clintService.findById(request.getClientId()));
+        order.setClient(inMemoryClintService.findById(request.getClientId()));
 
         return order;
     }
