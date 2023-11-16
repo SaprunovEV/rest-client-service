@@ -30,10 +30,10 @@ dependencies {
     runtimeOnly("org.postgresql:postgresql")
     annotationProcessor("org.projectlombok:lombok")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-//    testImplementation("org.springframework.boot:spring-boot-testcontainers")
+    testImplementation("org.springframework.boot:spring-boot-testcontainers")
     testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("net.javacrumbs.json-unit:json-unit:2.38.0")
-//    testImplementation("org.testcontainers:postgresql")
+    testImplementation("org.testcontainers:postgresql")
 }
 
 tasks.withType<Test> {
