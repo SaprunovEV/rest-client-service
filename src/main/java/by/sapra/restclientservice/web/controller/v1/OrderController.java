@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -85,7 +86,7 @@ public class OrderController {
             )
     })
     @PostMapping
-    public ResponseEntity<OrderResponse> create(@RequestBody UpsertOrderRequest request) {
+    public ResponseEntity<OrderResponse> create(@RequestBody @Valid UpsertOrderRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 mapper.orderToResponse(service.save(mapper.requestToOrder(request)))
         );
