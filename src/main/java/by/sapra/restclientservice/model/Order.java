@@ -17,6 +17,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @ToString
 @Entity(name = "orders")
 @NoArgsConstructor
+@AllArgsConstructor
 public class Order {
     @Id
     @GeneratedValue(strategy = IDENTITY)
