@@ -62,7 +62,7 @@ public class ClientControllerTest extends AbstractTestController {
                 .getResponse()
                 .getContentAsString();
 
-        String expectedResponse = StringTestUtils.readStringFromResource("/response/find_all_clients_response.json");
+        String expectedResponse = StringTestUtils.readStringFromResource("/response/clients/find_all_clients_response.json");
 
         JsonAssert.assertJsonEquals(expectedResponse, actualResponse);
 
@@ -83,7 +83,7 @@ public class ClientControllerTest extends AbstractTestController {
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
-        String expectedResponse = StringTestUtils.readStringFromResource("/response/find_client_by_id_response.json");
+        String expectedResponse = StringTestUtils.readStringFromResource("/response/clients/find_client_by_id_response.json");
 
         JsonAssert.assertJsonEquals(expectedResponse, actualRequest);
 
@@ -123,7 +123,7 @@ public class ClientControllerTest extends AbstractTestController {
                 .getResponse()
                 .getContentAsString();
 
-        String expectedResponse = StringTestUtils.readStringFromResource("/response/update_client_response.json");
+        String expectedResponse = StringTestUtils.readStringFromResource("/response/clients/update_client_response.json");
 
         JsonAssert.assertJsonEquals(expectedResponse, actualResponse);
 
@@ -155,7 +155,7 @@ public class ClientControllerTest extends AbstractTestController {
                 .andReturn().getResponse()
                 .getContentAsString();
 
-        String expectedResponse = StringTestUtils.readStringFromResource("/response/create_client_response.json");
+        String expectedResponse = StringTestUtils.readStringFromResource("/response/clients/create_client_response.json");
 
         JsonAssert.assertJsonEquals(expectedResponse, actualResponse);
 
@@ -191,7 +191,7 @@ public class ClientControllerTest extends AbstractTestController {
         String actualResponse = response
                 .getContentAsString();
 
-        String expectedResponse = StringTestUtils.readStringFromResource("/response/client_by_id_not_found_response.json");
+        String expectedResponse = StringTestUtils.readStringFromResource("/response/clients/client_by_id_not_found_response.json");
 
         JsonAssert.assertJsonEquals(expectedResponse, actualResponse);
     }
@@ -207,7 +207,7 @@ public class ClientControllerTest extends AbstractTestController {
 
         String actualContent = response.getContentAsString();
 
-        String expectedContent = StringTestUtils.readStringFromResource("/response/not_valid_name_response.json");
+        String expectedContent = StringTestUtils.readStringFromResource("/response/clients/not_valid_name_response.json");
 
         JsonAssert.assertJsonEquals(expectedContent, actualContent);
     }
@@ -226,7 +226,7 @@ public class ClientControllerTest extends AbstractTestController {
 
         String actualContent = response.getContentAsString();
 
-        String expectedContent = StringTestUtils.readStringFromResource("/response/client_name_size_exception_response.json");
+        String expectedContent = StringTestUtils.readStringFromResource("/response/clients/client_name_size_exception_response.json");
 
         JsonAssert.assertJsonEquals(expectedContent, actualContent);
     }
