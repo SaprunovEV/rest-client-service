@@ -2,9 +2,11 @@ package by.sapra.restclientservice.service.impl;
 
 import by.sapra.restclientservice.exception.EntityNotFoundException;
 import by.sapra.restclientservice.model.Client;
+import by.sapra.restclientservice.model.Order;
 import by.sapra.restclientservice.reposytory.ClientRepository;
 import by.sapra.restclientservice.service.ClintService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
@@ -40,5 +42,10 @@ public class InMemoryClintService implements ClintService {
     @Override
     public void deleteById(Long id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public Client saveWithOrders(Client client, List<Order> orders) {
+        throw new NotImplementedException();
     }
 }

@@ -1,6 +1,7 @@
 package by.sapra.restclientservice.service;
 
 import by.sapra.restclientservice.model.Client;
+import by.sapra.restclientservice.model.Order;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ public interface ClintService {
     Client update(Client client);
 
     void deleteById(Long id);
+
+    Client saveWithOrders(Client client, List<Order> orders);
 }
