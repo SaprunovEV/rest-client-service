@@ -25,7 +25,15 @@ public class Client {
     private List<Order> orders = new ArrayList<>();
 
     public void addOrder(Order order) {
+        if (orders == null) this.orders = new ArrayList<>();
         orders.add(order);
+    }
+
+    public List<Order> getOrders() {
+        if (orders==null) {
+            orders = new ArrayList<>();
+        }
+        return orders;
     }
 
     public void removeOrder(Long orderId) {

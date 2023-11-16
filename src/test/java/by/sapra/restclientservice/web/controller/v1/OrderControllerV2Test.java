@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = {OrderController.class})
-class OrderControllerTest extends AbstractTestController {
+class OrderControllerV2Test extends AbstractTestController {
     @MockBean
     OrderService service;
     @MockBean
