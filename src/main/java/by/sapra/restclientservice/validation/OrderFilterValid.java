@@ -17,7 +17,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 public @interface OrderFilterValid {
     String message() default "Поля пагинации должны быть указаны! Если вы указываете minCost или maxCost то оба должны быть указаны!";
 
-    Class<?>[] group() default {};
+    Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
 }
