@@ -1,5 +1,6 @@
 package by.sapra.restclientservice.service;
 
+import by.sapra.restclientservice.aop.Loggable;
 import by.sapra.restclientservice.exception.EntityNotFoundException;
 import by.sapra.restclientservice.model.Client;
 import by.sapra.restclientservice.model.Order;
@@ -20,6 +21,7 @@ public class DatabaseClintService implements ClintService {
     private final DatabaseOrderRepository orderRepository;
 
     @Override
+    @Loggable
     public List<Client> findAll() {
         return repository.findAll();
     }
@@ -49,6 +51,7 @@ public class DatabaseClintService implements ClintService {
     }
 
     @Override
+    @Loggable
     @Transactional
     public Client saveWithOrders(Client client, List<Order> orders) {
         Client savedClient = save(client);
